@@ -12,6 +12,8 @@ export default function Navbar() {
   const { data: session } = useSession();
   const user = session?.user;
 
+  console.log("user details in the nabar", user)
+
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-50 bg-gray-100 backdrop-blur-md text-gray-900">
@@ -39,6 +41,11 @@ export default function Navbar() {
 
           {/* DESKTOP CART + LOGIN */}
           <div className="hidden md:flex items-center gap-8">
+            {user && <div className="flex items-center gap-2 hover:text-black transition">
+             👋
+              <span className="text-base font-semibold">{user?.firstName} {user?.lastName}</span>
+            </div>}
+
             <Link href="/cart" className="flex items-center gap-2 hover:text-black transition">
               <FiShoppingCart size={20} />
               <span className="text-base font-semibold">Cart (0)</span>
