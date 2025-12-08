@@ -1,40 +1,32 @@
+"use client";
 
-import MobileBottomNav from '@/components/layout/MobileBottomNav';
-import Sidebar from '../../../components/layout/Sidebar';
-import DashboardNavbar from '@/components/layout/DashboardNavbar';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { redirect } from 'next/navigation';
+import { useState } from "react";
+import Sidebar from "@/components/layout/Sidebar";
+import DashboardNavbar from "@/components/layout/DashboardNavbar";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
 
-export default async function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const [collapsed, setCollapsed] = useState(false);
 
-   const session = await getServerSession(authOptions);
-
-  if (!session?.user) {
-    redirect("/login");
-  }
-
-  if (session.user.role !== "ADMIN") {
-    redirect("/"); 
-  }
   return (
-     <div className="flex min-h-screen">
-      {/* DESKTOP SIDEBAR */}
-      <div className="hidden md:flex">
-        <Sidebar />
-      </div>
+    <div className="min-h-screen flex bg-gray-50">
+      
+      {/* SIDEBAR */}
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
-      {/* MAIN AREA */}
-      <div className="flex-1 flex flex-col bg-gray-50 min-h-screen">
-        {/* TOP NAVBAR (ALWAYS VISIBLE) */}
-        <DashboardNavbar />
+      {/* MAIN SECTION */}
+      <div
+        className={`
+          flex-1 flex flex-col transition-all duration-300
+          ${collapsed ? "ml-16" : "ml-64"}   /* ADJUST MAIN AREA */
+        `}
+      >
+        
+        {/* NAVBAR */}
+        <DashboardNavbar collapsed={collapsed} />
 
         {/* PAGE CONTENT */}
-        <main className="flex-1 p-4">
+        <main className="pt-24 p-10">
           {children}
         </main>
       </div>

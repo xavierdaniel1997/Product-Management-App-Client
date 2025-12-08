@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -10,28 +9,37 @@ import {
   FiBox,
   FiChevronLeft,
   FiChevronRight,
-  FiLogOut,
+  FiLogOut
 } from "react-icons/fi";
 
-export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false);
+
+
+export default function Sidebar({
+  collapsed,
+  setCollapsed
+}: {
+  collapsed: boolean;
+  setCollapsed: (v: boolean) => void;
+}) {
   const pathname = usePathname();
 
   const navItems = [
-    { name: "Dashboard", href: "/dashboard", icon: <FiHome /> },
-    { name: "Products", href: "/products", icon: <FiBox /> },
-    { name: "Categories", href: "/categories", icon: <FiTag /> },
+    { name: "Products", href: "/dashboard", icon: <FiHome /> },
+    { name: "Add Products", href: "/dashboard/addproducts", icon: <FiBox /> },
+    { name: "Users", href: "/users", icon: <FiTag /> },
     { name: "Orders", href: "/orders", icon: <FiShoppingCart /> },
   ];
 
   return (
-    <div
-      className={`h-screen bg-[#1a1d1f] text-gray-200 flex flex-col justify-between transition-all duration-300 border-r border-gray-700
+    <aside
+      className={`
+        fixed top-0 left-0 h-screen bg-[#1a1d1f] text-gray-200 
+        border-r border-gray-700 flex flex-col justify-between
+        transition-all duration-300 z-50
         ${collapsed ? "w-20" : "w-64"}
       `}
     >
       <div>
-        {/* HEADER */}
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
           <div className="flex items-center gap-2">
             <FiShoppingCart className="text-xl" />
@@ -46,7 +54,6 @@ export default function Sidebar() {
           </button>
         </div>
 
-        {/* NAV LINKS */}
         <nav className="flex flex-col gap-1 mt-4 p-2">
           {navItems.map((item) => {
             const active = pathname === item.href;
@@ -55,8 +62,9 @@ export default function Sidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 p-3 text-sm font-medium 
-                  rounded-md transition-all cursor-pointer
+                className={`
+                  flex items-center gap-3 p-3 text-sm rounded-md font-medium
+                  transition-all
                   ${active ? "bg-blue-600 text-white" : "hover:bg-gray-800"}
                 `}
               >
@@ -68,17 +76,12 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* LOGOUT BUTTON */}
       <div className="p-2 mb-4">
-        <button
-          onClick={() => console.log("Logout clicked")}
-          className="w-full flex items-center gap-3 p-3 text-sm font-medium rounded-md 
-            text-gray-300 hover:bg-red-700/80 hover:text-white transition-all"
-        >
+        <button className="w-full flex items-center gap-3 p-3 rounded-md text-sm font-medium text-gray-300 hover:bg-red-700/80 hover:text-white">
           <FiLogOut className="text-xl" />
           {!collapsed && <span>Logout</span>}
         </button>
       </div>
-    </div>
+    </aside>
   );
 }
