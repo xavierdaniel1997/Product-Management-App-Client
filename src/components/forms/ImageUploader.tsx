@@ -35,7 +35,6 @@ export default function ImageUploader({
     <div className="space-y-4">
       <p className="text-sm text-gray-500">Add up to 5 images. High-quality photos recommended.</p>
 
-      {/* UPLOAD AREA */}
       <div
         onClick={() => fileRef.current?.click()}
         onDrop={onDrop}
@@ -59,7 +58,7 @@ export default function ImageUploader({
         />
       </div>
 
-      {/* IMAGE PREVIEW GRID */}
+  
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {images.map((file, idx) => (
           <div key={idx} className="relative group">
@@ -69,8 +68,9 @@ export default function ImageUploader({
               className="w-full h-40 object-cover rounded-lg border"
             />
 
-            {/* DELETE BUTTON */}
+        
             <button
+            type="button"
               onClick={() => removeImage(idx)}
               className="
                 absolute -top-2 -right-2 bg-black/70 text-white 

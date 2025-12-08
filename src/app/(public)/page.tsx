@@ -2,32 +2,28 @@
 
 import { FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
+import { useGetAllProducts } from "@/hooks/useCreateProduct";
+import ProductCard from "@/components/shared/ProductCard";
+import { IProduct } from "@/types/product";
+import ProductList from "@/components/shared/ProductList";
 
-const products = [
-  { name: "Shibuya Totepack", desc: "Recycled PET Rip-Stop", img: "/products/bag1.png", price: 2999 },
-  { name: "SoFo Backpack City", desc: "Recycled Coated Cotton Canvas", img: "/products/bag2.png", price: 4999 },
-  { name: "Gion Backpack Pro", desc: "Waterproof Tarpaulin", img: "/products/bag3.png", price: 6999 },
-  { name: "SoFo Rolltop Backpack X", desc: "Recycled Coated Canvas", img: "/products/bag4.png", price: 3999 },
-];
+
 
 export default function HomePage() {
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("");
 
-  // FILTER + SORT
-  const filteredProducts = products
-    .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
-    .sort((a, b) => {
-      if (sortBy === "low") return a.price - b.price;
-      if (sortBy === "high") return b.price - a.price;
-      return 0;
-    });
+ const minPrice = sortBy === "low" ? 0 : undefined;
+  const maxPrice = sortBy === "high" ? 999999 : undefined;
+
+   const { data: products = [], isLoading } =
+    useGetAllProducts(search, minPrice, maxPrice);
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+     <div className="p-10">
+       {/* SEARCH + SORT BAR */}
 
-      {/* HEADER TEXT */}
-      <section className="max-w-7xl mx-auto px-6 pt-16 pb-10">
+        <section className="max-w-7xl mx-auto px-6 pt-16 pb-10">
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">
           Get Inspired
         </h1>
@@ -38,7 +34,7 @@ export default function HomePage() {
         </p>
       </section>
 
-      {/* SEARCH + SORT BAR */}
+
       <section className="max-w-7xl mx-auto px-6 flex flex-wrap gap-4 pb-12">
 
         {/* SEARCH INPUT */}
@@ -68,31 +64,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PRODUCT GRID */}
-      <section className="max-w-7xl mx-auto px-6 pb-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      {isLoading && <p>Loading...</p>}
 
-          {filteredProducts.length === 0 && (
-            <p className="text-gray-500 text-center col-span-full">No products found.</p>
-          )}
-
-          {filteredProducts.map((p, i) => (
-            <div key={i} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
-              <div className="w-full h-56 bg-gray-200 flex items-center justify-center">
-                <img src={p.img} alt={p.name} className="h-full object-cover" />
-              </div>
-
-              <div className="p-4">
-                <h3 className="font-semibold text-gray-800">{p.name}</h3>
-                <p className="text-sm text-gray-500 mt-1">{p.desc}</p>
-                <p className="text-sm font-semibold text-gray-900 mt-2">₹{p.price}</p>
-              </div>
-            </div>
-          ))}
-
-        </div>
+      <section className="max-w-7xl mx-auto px-6 flex flex-wrap gap-4 pb-12">
+        <ProductList products={products}/>
       </section>
 
+     
     </div>
   );
 }

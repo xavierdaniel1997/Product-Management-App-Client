@@ -5,18 +5,17 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0c0c0c] text-gray-300 pt-20">
+    <footer className="bg-[#0c0c0c] text-gray-300 pt-16">
 
-      {/* GRADIENT TOP LINE */}
+      {/* TOP GRADIENT LINE */}
       <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-gray-700 to-transparent opacity-40" />
 
-      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-14">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-14 
+                      grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
 
-        {/* BRAND SECTION */}
+        {/* BRAND */}
         <div>
-          <h2 className="text-3xl font-semibold tracking-tight text-white mb-6">
-            MyStore
-          </h2>
+          <h2 className="text-3xl font-semibold text-white mb-5">MyStore</h2>
 
           <p className="text-gray-400 text-sm leading-relaxed">
             Crafting premium essentials with timeless design and exceptional durability.
@@ -31,40 +30,32 @@ export default function Footer() {
 
         {/* SHOP */}
         <div>
-          <h3 className="text-lg text-white font-medium tracking-wide mb-5">
-            Shop
-          </h3>
-          <ul className="space-y-3 text-sm">
-            <li><Link href="/shop" className="text-gray-400 hover:text-white transition">All Products</Link></li>
-            <li><Link href="/collections" className="text-gray-400 hover:text-white transition">Collections</Link></li>
-            <li><Link href="/new-arrivals" className="text-gray-400 hover:text-white transition">New Arrivals</Link></li>
-            <li><Link href="/best-sellers" className="text-gray-400 hover:text-white transition">Best Sellers</Link></li>
+          <h3 className="text-lg text-white font-medium mb-4">Shop</h3>
+          <ul className="space-y-2 text-sm">
+            <li><Link href="/shop" className="hover:text-white text-gray-400 transition">All Products</Link></li>
+            <li><Link href="/collections" className="hover:text-white text-gray-400 transition">Collections</Link></li>
+            <li><Link href="/new-arrivals" className="hover:text-white text-gray-400 transition">New Arrivals</Link></li>
+            <li><Link href="/best-sellers" className="hover:text-white text-gray-400 transition">Best Sellers</Link></li>
           </ul>
         </div>
 
         {/* SUPPORT */}
         <div>
-          <h3 className="text-lg text-white font-medium tracking-wide mb-5">
-            Support
-          </h3>
-          <ul className="space-y-3 text-sm">
-            <li><Link href="/contact" className="text-gray-400 hover:text-white transition">Contact Us</Link></li>
-            <li><Link href="/faq" className="text-gray-400 hover:text-white transition">FAQ</Link></li>
-            <li><Link href="/shipping" className="text-gray-400 hover:text-white transition">Shipping Info</Link></li>
-            <li><Link href="/returns" className="text-gray-400 hover:text-white transition">Returns</Link></li>
+          <h3 className="text-lg text-white font-medium mb-4">Support</h3>
+          <ul className="space-y-2 text-sm">
+            <li><Link href="/contact" className="hover:text-white text-gray-400 transition">Contact Us</Link></li>
+            <li><Link href="/faq" className="hover:text-white text-gray-400 transition">FAQ</Link></li>
+            <li><Link href="/shipping" className="hover:text-white text-gray-400 transition">Shipping Info</Link></li>
+            <li><Link href="/returns" className="hover:text-white text-gray-400 transition">Returns</Link></li>
           </ul>
         </div>
 
         {/* NEWSLETTER */}
         <div>
-          <h3 className="text-lg text-white font-medium tracking-wide mb-5">
-            Stay in the Loop
-          </h3>
-          <p className="text-sm text-gray-400 mb-5">
-            Exclusive deals, early access & new drops.
-          </p>
+          <h3 className="text-lg text-white font-medium mb-4">Stay in the Loop</h3>
+          <p className="text-sm text-gray-400 mb-4">Exclusive deals, early access & new drops.</p>
 
-          <div className="flex items-center bg-[#1a1a1a] rounded-full overflow-hidden shadow-inner shadow-black/40">
+          <div className="flex items-center bg-[#1a1a1a] rounded-full shadow-inner overflow-hidden">
             <input
               type="email"
               placeholder="Enter your email"
@@ -75,11 +66,11 @@ export default function Footer() {
             </button>
           </div>
         </div>
-
       </div>
 
-      {/* FOOTER BOTTOM */}
-      <div className="px-6 py-8 border-t border-white/10 text-center text-xs text-gray-500 tracking-wide">
+      {/* BOTTOM SECTION */}
+      <div className="px-5 sm:px-8 lg:px-10 py-6 border-t border-white/10 
+                      text-center text-[13px] text-gray-500">
         © {new Date().getFullYear()} MyStore — All Rights Reserved.
       </div>
     </footer>
