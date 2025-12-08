@@ -22,6 +22,20 @@ export const registerSchema = z
     path: ["confirmPassword"],
   });
 
+export const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Invalid email format"),
+
+  password: z
+    .string()
+    .min(1, "Password is required")
+    .min(6, "Password must be at least 6 characters"),
+});
+
+
 export type EmailInput = z.infer<typeof emailSchema>;
 export type OtpInput = z.infer<typeof otpSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
+export type LoginFormValues = z.infer<typeof loginSchema>;

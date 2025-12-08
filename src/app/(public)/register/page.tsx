@@ -13,9 +13,13 @@ import { EmailStep } from "./components/EmailStep";
 import { OtpStep } from "./components/OtpStep";
 import { DetailsStep } from "./components/DetailsStep";
 import type { RegisterFormValues, Step } from "./types";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const [step, setStep] = useState<Step>("EMAIL");
+  const router = useRouter();
 
   const verifyEmailMutation = useVerifyEmail();
   const verifyOtpMutation = useVerifyOtp();
@@ -26,6 +30,7 @@ export default function RegisterPage() {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    watch,
   } = useForm<RegisterFormValues>({
     mode: "onSubmit",
     defaultValues: {
@@ -74,8 +79,22 @@ export default function RegisterPage() {
           confirmPassword: parsed.confirmPassword,
         });
 
-        // you can redirect or reset here
-        // router.push("/login") etc.
+        // Auto-login after registration
+        const loginResult = await signIn("credentials", {
+          email: parsed.email,
+          password: parsed.password,
+          redirect: false,
+        });
+
+        if (loginResult?.error) {
+          console.error("Auto-login failed:", loginResult.error);
+          return;
+        }
+
+        // Redirect to home or dashboard
+        toast.success("Register successfully!");
+        router.push("/");
+
         return;
       }
     } catch (err) {
@@ -127,7 +146,7 @@ export default function RegisterPage() {
           {step === "EMAIL" && (
             <EmailStep register={register} errors={errors} />
           )}
-          {step === "OTP" && <OtpStep register={register} errors={errors} />}
+          {step === "OTP" && <OtpStep register={register} errors={errors} email={watch("email")}/>}
           {step === "DETAILS" && (
             <DetailsStep register={register} errors={errors} />
           )}
