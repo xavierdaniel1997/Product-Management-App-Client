@@ -12,7 +12,6 @@ export default function Navbar() {
   const { data: session } = useSession();
   const user = session?.user;
 
-  console.log("user details in the nabar", user)
 
   return (
     <>
