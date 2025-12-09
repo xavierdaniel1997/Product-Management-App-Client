@@ -66,9 +66,12 @@ export default function HomePage() {
 
       {isLoading && <p>Loading...</p>}
 
-      <section className="max-w-7xl mx-auto px-6 flex flex-wrap gap-4 pb-12">
-        <ProductList products={products}/>
-      </section>
+
+<section className="max-w-7xl mx-auto px-6 pb-12">
+  <ProductList products={products} />
+</section>
+
+
 
      
     </div>
