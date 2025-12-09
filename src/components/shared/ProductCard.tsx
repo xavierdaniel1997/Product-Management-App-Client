@@ -17,36 +17,32 @@ export default function ProductCard({
   price,
   productId,
 }: ProductCardProps) {
-  
+
   const router = useRouter();
 
-  
-
   return (
-    <div
-      className="w-full rounded-xl cursor-pointer"
+    <motion.div
+      whileHover={{ y: -6, scale: 1.02 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
       onClick={() => router.push(`/product/${productId}`)}
+      className="w-full cursor-pointer"
     >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        whileHover={{ scale: 1.05 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-        className="relative bg-gray-200 rounded-lg p-4 h-56"
-      >
+  
+      <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-gray-100">
         <Image
           src={image}
           alt={title}
           fill
           unoptimized
-          className="object-contain"
+          className="object-cover transition-transform duration-300 ease-out hover:scale-110"
         />
-      </motion.div>
-
-      <div className="mt-4 px-1">
-        <h3 className="text-sm font-semibold">{title}</h3>
-        <p className="text-sm font-semibold mt-2">₹ {price}</p>
       </div>
-    </div>
+
+
+      <div className="mt-3">
+        <h3 className="text-sm font-semibold truncate">{title}</h3>
+        <p className="text-sm font-bold mt-1">₹ {price}</p>
+      </div>
+    </motion.div>
   );
 }
