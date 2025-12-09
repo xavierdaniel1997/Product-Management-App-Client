@@ -9,16 +9,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
+    <div className="min-h-screen flex bg-gray-100">
       
       {/* SIDEBAR */}
-      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      {/* <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} /> */}
+      <div className="hidden lg:block">
+  <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+</div>
 
       {/* MAIN SECTION */}
       <div
         className={`
           flex-1 flex flex-col transition-all duration-300
-          ${collapsed ? "ml-16" : "ml-64"}   /* ADJUST MAIN AREA */
+          ${collapsed ? "lg:ml-16" : "lg:ml-64"} ml-0
         `}
       >
         

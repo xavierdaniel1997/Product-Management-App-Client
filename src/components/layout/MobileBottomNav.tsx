@@ -15,7 +15,7 @@ export default function MobileBottomNav() {
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: <FiHome /> },
-    { name: "Products", href: "/products", icon: <FiBox /> },
+    { name: "Products", href: "/dashboard/addproducts", icon: <FiBox /> },
     { name: "Cart", href: "/cart", icon: <FiShoppingCart /> },
     { name: "Settings", href: "/settings", icon: <FiSettings /> },
   ];
@@ -45,9 +45,9 @@ export default function MobileBottomNav() {
 
       {/* CENTER ACTION BUTTON */}
       <div className="flex justify-center">
-        <button className="bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl">
+        <Link href="/dashboard/addproducts" className="bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl">
           <FiPlus />
-        </button>
+        </Link>
       </div>
 
       {navItems.slice(2).map((item) => {
