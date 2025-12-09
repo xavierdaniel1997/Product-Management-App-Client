@@ -15,7 +15,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   return (
     <>
       <Navbar />
-      <main className="pt-20">{children}</main>
+      <main className="pt-16 sm:pt-20">{children}</main>
 
       {!shouldHideFooter && <Footer />}
     </>
