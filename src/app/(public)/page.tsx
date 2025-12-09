@@ -34,10 +34,10 @@ export default function HomePage() {
   }, [products, search, sortBy]);
 
   return (
-    <div className="p-10">
+    <div className="">
       
       {/* TITLE SECTION */}
-      <section className="max-w-7xl mx-auto px-6 pt-16 pb-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-8 sm:pb-10">
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">
           Get Inspired
         </h1>
@@ -47,7 +47,7 @@ export default function HomePage() {
       </section>
 
       {/* SEARCH + SORT BAR */}
-      <section className="max-w-7xl mx-auto px-6 flex flex-wrap gap-4 pb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-wrap gap-3 sm:gap-4 pb-8 sm:pb-12">
         
         {/* SEARCH */}
         <input

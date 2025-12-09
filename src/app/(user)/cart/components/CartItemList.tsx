@@ -9,7 +9,7 @@ type CartItemListProps = {
 
 export default function CartItemList({ cart }: CartItemListProps) {
   return (
-    <div className="flex flex-col gap-8 px-4 lg:px-10">
+    <div className="flex flex-col gap-6 px-3 sm:px-4 lg:px-10">
       {cart.items.map((item) => (
         <CartItem
           key={item._id}

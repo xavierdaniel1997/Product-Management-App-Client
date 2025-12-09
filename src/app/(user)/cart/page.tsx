@@ -21,7 +21,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="px-6 lg:px-20 py-8 min-h-screen">
+    <div className="px-4 sm:px-6 lg:px-20 py-6 sm:py-8 min-h-screen">
       <section className="max-w-6xl mx-auto px-6 pb-12 mt-10">
       <h1 className="text-3xl font-bold mb-6 text-gray-500">Your Cart</h1>
         <CartItemList cart={cart} />
