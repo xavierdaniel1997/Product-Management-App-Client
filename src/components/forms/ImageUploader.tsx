@@ -1,23 +1,25 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { FiUpload, FiX } from "react-icons/fi";
+
+type ImageType = File | string;
 
 export default function ImageUploader({
   images,
   setImages,
 }: {
-  images: File[];
-  setImages: (imgs: File[]) => void;
+  images: ImageType[];
+  setImages: (imgs: ImageType[]) => void;
 }) {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const handleFiles = (files: FileList) => {
-    const fileArr = Array.from(files);
+    const newFiles = Array.from(files);
 
-    if (images.length + fileArr.length > 5) return;
+    if (images.length + newFiles.length > 5) return;
 
-    setImages([...images, ...fileArr]);
+    setImages([...images, ...newFiles]);
   };
 
   const onDrop = (e: React.DragEvent) => {
@@ -31,23 +33,32 @@ export default function ImageUploader({
     setImages(updated);
   };
 
+  // Generate preview for both File and URL string
+  const getPreview = (img: ImageType) => {
+    return typeof img === "string" ? img : URL.createObjectURL(img);
+  };
+
   return (
     <div className="space-y-4">
-      <p className="text-sm text-gray-500">Add up to 5 images. High-quality photos recommended.</p>
+      <p className="text-sm text-gray-500">
+        Add up to 5 images. High-quality photos recommended.
+      </p>
 
       <div
         onClick={() => fileRef.current?.click()}
         onDrop={onDrop}
         onDragOver={(e) => e.preventDefault()}
         className="
-          w-full h-40 border-2 border-dashed border-gray-300 
+          w-full h-40 border-2 border-dashed border-gray-300
           rounded-xl flex flex-col items-center justify-center
           cursor-pointer hover:border-blue-500 hover:bg-gray-50
           transition
         "
       >
         <FiUpload className="text-3xl text-gray-500" />
-        <p className="text-sm mt-2 text-gray-500">Drag & drop or click to upload</p>
+        <p className="text-sm mt-2 text-gray-500">
+          Drag & drop or click to upload
+        </p>
         <input
           ref={fileRef}
           type="file"
@@ -58,19 +69,18 @@ export default function ImageUploader({
         />
       </div>
 
-  
+      {/* PREVIEW GRID */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-        {images.map((file, idx) => (
+        {images.map((img, idx) => (
           <div key={idx} className="relative group">
             <img
-              src={URL.createObjectURL(file)}
+              src={getPreview(img)}
               alt="preview"
               className="w-full h-40 object-cover rounded-lg border"
             />
 
-        
             <button
-            type="button"
+              type="button"
               onClick={() => removeImage(idx)}
               className="
                 absolute -top-2 -right-2 bg-black/70 text-white 

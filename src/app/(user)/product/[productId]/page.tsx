@@ -51,7 +51,7 @@ export default function ProductDetails() {
                 displayedImg === img ? "border-blue-600" : "border-gray-200"
               } relative shrink-0`}
             >
-              <Image src={img} alt="thumb" fill className="object-cover rounded" />
+              <Image src={img} alt="thumb" fill unoptimized className="object-cover rounded" />
             </div>
           ))}
         </div>

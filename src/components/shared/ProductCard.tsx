@@ -38,6 +38,7 @@ export default function ProductCard({
           src={image}
           alt={title}
           fill
+          unoptimized
           className="object-contain"
         />
       </motion.div>

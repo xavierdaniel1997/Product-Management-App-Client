@@ -33,11 +33,12 @@ export default function Sidebar({
   return (
     <aside
       className={`
-        fixed top-0 left-0 h-screen bg-[#1a1d1f] text-gray-200 
-        border-r border-gray-700 flex flex-col justify-between
-        transition-all duration-300 z-50
-        ${collapsed ? "w-20" : "w-64"}
-      `}
+    hidden lg:flex
+    fixed top-0 left-0 h-screen bg-[#1a1d1f] text-gray-200 
+    border-r border-gray-700 flex-col justify-between
+    transition-all duration-300 z-50
+    ${collapsed ? "w-20" : "w-64"}
+  `}
     >
       <div>
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
