@@ -3,13 +3,34 @@
 import { useProductById } from "@/hooks/useCreateProduct";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
+import { useAddToCart } from "@/hooks/useCart";
 
 export default function ProductDetails() {
+   const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
 
   const { data: product, isLoading, error } = useProductById(productId as string);
+    const addToCart = useAddToCart();
+
+  const handleIncrease = useCallback(() => {
+    if (!product) return;
+    setQuantity((q) => Math.min(product.stock, q + 1));
+  }, [product]);
+
+  const handleDecrease = useCallback(() => {
+    setQuantity((q) => Math.max(1, q - 1));
+  }, []);
+
+
+  const handleAddToCart = useCallback(() => {
+    if (!product) return;
+    addToCart.mutate({
+      productId: product._id,
+      quantity,
+    });
+  }, [product, quantity, addToCart]);
 
   const images: string[] = product?.images || [];
 
@@ -81,16 +102,51 @@ export default function ProductDetails() {
         </div>
       </div>
 
-      {/* RIGHT SIDE - DETAILS */}
+
+
       <div className="lg:w-1/2 w-full mt-6 lg:mt-0">
         <h1 className="text-2xl font-bold mb-2">{product.productName}</h1>
         <p className="text-gray-600 leading-relaxed mb-4">{product.description}</p>
 
         <p className="text-3xl font-semibold mt-2 mb-4">₹ {product.price}</p>
 
-        <button className="w-full lg:w-72 py-2 bg-black/80 hover:bg-black text-white rounded-xl font-semibold text-lg transition-all">
-          Add to Cart
+        <p className="text-sm text-gray-500 mb-3">
+          Stock Available: {product.stock}
+        </p>
+
+        {/* QUANTITY SELECTOR */}
+        <div className="flex items-center gap-4 mb-6">
+          <button
+            onClick={handleDecrease}
+            className="w-10 h-10 flex items-center justify-center border rounded-lg text-lg"
+          >
+            -
+          </button>
+
+          <span className="text-lg font-medium w-10 text-center">{quantity}</span>
+
+          <button
+            onClick={handleIncrease}
+            disabled={quantity >= product.stock}
+            className="w-10 h-10 flex items-center justify-center border rounded-lg text-lg disabled:opacity-50"
+          >
+            +
+          </button>
+        </div>
+
+        {/* ADD TO CART */}
+        <button
+          onClick={handleAddToCart}
+          disabled={addToCart.isPending || product.stock === 0}
+          className="w-full lg:w-72 py-2 bg-black/80 hover:bg-black text-white rounded-xl font-semibold text-lg transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          {product.stock === 0
+            ? "Out of Stock"
+            : addToCart.isPending
+            ? "Adding..."
+            : "Add to Cart"}
         </button>
+
       </div>
     </div>
   );
